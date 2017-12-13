@@ -93,7 +93,7 @@ func TestBasicIntCRUD(t *testing.T) {
 }
 
 func TestChangeLevel(t *testing.T) {
-	var i float64
+	var i uint64
 
 	// Override global default for this test, save old value to restore afterward
 	oldMaxLevel := DefaultMaxLevel
@@ -137,7 +137,7 @@ func TestChangeLevel(t *testing.T) {
 	}
 
 	for c := list.Front(); c != nil; c = c.Next() {
-		if c.key*10 != c.value.(float64) {
+		if c.key*10 != c.value.(uint64) {
 			t.Fatal("wrong list element value")
 		}
 	}

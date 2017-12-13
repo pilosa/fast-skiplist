@@ -1,9 +1,6 @@
 package skiplist
 
-import (
-	"math/rand"
-	"sync"
-)
+import "math/rand"
 
 type elementNode struct {
 	next []*Element
@@ -11,12 +8,12 @@ type elementNode struct {
 
 type Element struct {
 	elementNode
-	key   float64
+	key   uint64
 	value interface{}
 }
 
 // Key allows retrieval of the key for a given Element
-func (e *Element) Key() float64 {
+func (e *Element) Key() uint64 {
 	return e.key
 }
 
@@ -32,6 +29,5 @@ type SkipList struct {
 	randSource     rand.Source
 	probability    float64
 	probTable      []float64
-	mutex          sync.RWMutex
 	prevNodesCache []*elementNode
 }
