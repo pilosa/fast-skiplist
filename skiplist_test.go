@@ -52,6 +52,17 @@ func TestBasicIntCRUD(t *testing.T) {
 	list.Set(20, 4)
 	list.Set(90, 5)
 	checkSanity(list, t)
+	if lst := list.Last(); lst.Value().(int) != 5 && lst.Key() != 90 {
+		t.Fatalf(`wrong Last value (expected 90: 5) %v: %v`, lst.Key(), lst.Value())
+	}
+	list.Remove(90)
+	if lst := list.Last(); lst.Value().(int) != 2 && lst.Key() != 60 {
+		t.Fatalf(`wrong Last value (expected 60: 2) %v: %v`, lst.Key(), lst.Value())
+	}
+	list.Set(90, 5)
+	if lst := list.Last(); lst.Value().(int) != 5 && lst.Key() != 90 {
+		t.Fatalf(`wrong Last value (expected 90: 5) %v: %v`, lst.Key(), lst.Value())
+	}
 
 	list.Set(30, 9)
 	checkSanity(list, t)

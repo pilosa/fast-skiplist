@@ -23,7 +23,20 @@ func (element *Element) Next() *Element {
 }
 
 func (list *SkipList) Last() *Element {
-	return list.next[len(list.next)-1]
+	prev := &Element{
+		elementNode: list.elementNode,
+	}
+	var next *Element
+
+	for i := list.maxLevel - 1; i >= 0; i-- {
+		next = prev.next[i]
+
+		for next != nil {
+			prev = next
+			next = next.next[i]
+		}
+	}
+	return prev
 }
 
 // Length returns the number of items in the list.
@@ -39,6 +52,9 @@ func (list *SkipList) Set(key uint64, value interface{}) *Element {
 
 	prevs := list.getPrevElementNodes(key)
 
+	// i believe this "<=" can be "==". getPrevElementNodes guarantees that key
+	// <= element.key, which means that element.key >= key. so if element.key <=
+	// key, then element.key == key.
 	if element = prevs[0].next[0]; element != nil && element.key <= key {
 		element.value = value
 		return element
